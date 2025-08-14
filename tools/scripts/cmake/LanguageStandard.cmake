@@ -12,3 +12,14 @@ endif()
 if(NOT DEFINED CMAKE_C_EXTENSIONS)
     set(CMAKE_C_EXTENSIONS OFF)
 endif()
+
+if(NOT DEFINED ECR_POSIX_SOURCE)
+    set(ECR_POSIX_SOURCE 202405L)
+endif()
+
+if(ECR_POSIX_SOURCE)
+    add_compile_definitions(
+        _POSIX_SOURCE=1
+        _POSIX_C_SOURCE=${ECR_POSIX_SOURCE}
+    )
+endif()

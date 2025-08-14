@@ -43,6 +43,9 @@ typedef enum ecr_status : int {
 
     // System errors
     ECR_ERROR_OUT_OF_MEMORY = 0x030,
+
+    // I/O errors
+    ECR_ERROR_END_OF_FILE = 0x100,
 } ecr_status_t;
 
 const char * ecr_status_string(ecr_status_t status);
