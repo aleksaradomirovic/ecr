@@ -7,7 +7,7 @@
 
 #if __STDC_HOSTED__
 
-ecr_status_t ecr_status_from_errnum(int errnum) {
+ecr_status_t ecr_status_from_errnum__(int errnum) {
     if(errnum <= 0) {
         return ECR_ERROR_UNKNOWN;
     }

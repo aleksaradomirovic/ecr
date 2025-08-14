@@ -22,6 +22,8 @@
 #include <errno.h>
 #endif
 
+#include <ecr/macro/assume.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -47,12 +49,22 @@ const char * ecr_status_string(ecr_status_t status);
 
 #if __STDC_HOSTED__
 
-ecr_status_t ecr_status_from_errnum(int errnum);
+ecr_status_t ecr_status_from_errnum__(int errnum);
+
+[[maybe_unused]]
+static ecr_status_t ecr_status_from_errnum(int errnum) {
+    ecr_status_t status = ecr_status_from_errnum__(errnum);
+    assume(status != ECR_SUCCESS);
+    return status;
+}
 
 #define ECR_STATUS_ERRNO ecr_status_from_errnum(errno)
 
 #endif
 
+#define ECR_ERROR_GUARD_DESTRUCT(status, destructor) { int ecr_status__ = status; if(ecr_status__ != ECR_SUCCESS) { { destructor; }; return ecr_status__; } }
+
+#define ECR_ERROR_GUARD(status) ECR_ERROR_GUARD_DESTRUCT(status, {})
 
 #ifdef __cplusplus
 }
